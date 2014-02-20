@@ -8,12 +8,14 @@
 <div class="banners">
   <div class="banner col-sm-4 col-md-3" ng-repeat="(identifier, banner) in banners">
     <div class="panel panel-default">
-      <div class="panel-heading">
-        {{banner.name}}
+      <div class="panel-heading" ng-switch on="banner.name">
+        <span ng-switch-when=""><em>No Name</em></span>
+        <span ng-switch-default>{{banner.name}}</span>
       </div>
       <div class="panel-body">
-        <img class="thumbnail" src="http://placehold.it/600x600">
-        <p class="text-center">x images</p>
+        <div class="banner-preview">
+          <img ng-src="{{image.file}}" ng-repeat="image in banner.images">
+        </div>
       </div>
       <div class="panel-footer">
         <div class="btn-toolbar">

@@ -1,8 +1,16 @@
 'use strict';
 
 angular.module('bannerManagerApp')
-  .controller('BannerCtrl', function ($scope, $modal, BannerService) {
-    $scope.banners = BannerService.getBanners();
+  .controller('BannerCtrl', function ($scope, $modal, $timeout, BannerService) {
+    BannerService.getBanners().then(function (banners) {
+      $scope.banners = banners;
+      $timeout(function() {
+        $('.banner-preview').cycle({
+          centerHorz: true,
+          centerVert: true
+        });
+      })
+    });
 
     $scope.create = function() {
       var banner = {
@@ -26,7 +34,7 @@ angular.module('bannerManagerApp')
     }
 
     $scope.edit = function(identifier) {
-      BannerService.getBanner(identifier).then(function(banner) {
+      BannerService.getBanner(identifier).then(function (banner) {
         var modal = $modal.open({
             templateUrl: 'views/banner-modal.html',
             controller: 'BannerModalCtrl',
@@ -42,7 +50,17 @@ angular.module('bannerManagerApp')
       });
     }
 
-    $scope.$on('bannerDeleted', function(event, identifier) {
+    $scope.$on('bannerCreated', function (event, identifier) {
+      BannerService.getBanner(identifier).then(function (banner) {
+        $scope.banners[identifier] = banner;
+      });
+    });
+
+    $scope.$on('bannerUpdated', function (event, identifier, banner) {
+      $scope.banners[identifier] = banner;
+    });
+
+    $scope.$on('bannerDeleted', function (event, identifier) {
       delete $scope.banners[identifier];
     });
   })
@@ -51,7 +69,7 @@ angular.module('bannerManagerApp')
     $scope.banner = banner;
     $scope.identifier = identifier;
 
-    ImageService.getImages().then(function(images) {
+    ImageService.getImages().then(function (images) {
       $scope.availableImages = images;
     });
 

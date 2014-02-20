@@ -6,3 +6,13 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 body {
     margin-top: 50px;
 }
+
+.banner-preview {
+	height: 220px;
+	width: 100%;
+
+	img {
+		max-height: 100%;
+		max-width: 100%;
+	}
+}

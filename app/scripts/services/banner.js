@@ -7,11 +7,14 @@ angular.module('bannerManagerApp')
     return {
       createBanner: function(data) {
         return $http.post(firebaseUrl + '/banners.json', data).then(function(response) {
-          return response.data;
+          var identifier = response.data.name;
+          $rootScope.$broadcast('bannerCreated', identifier);
         });
       },
     	getBanners: function() {
-    		return $firebase(banners);
+    		return $http.get(firebaseUrl + '/banners/.json').then(function(response) {
+          return response.data;
+        });
     	},
     	getBanner: function(identifier) {
     		return $http.get(firebaseUrl + '/banners/' + identifier + '.json').then(function(response) {
