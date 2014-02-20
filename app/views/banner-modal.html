@@ -1,11 +1,6 @@
-<div class="modal-header" ng-switch on="banner.id">
+<div class="modal-header" ng-switch on="identifier">
 	<h3 class="modal-title" ng-switch-when="-1">Add Banner</h3>
-	<h3 class="modal-title" ng-switch-default>
-		Edit Banner
-		<button type="button" class="btn btn-danger pull-right" ng-click="delete()">
-			Delete <i class="glyphicon glyphicon-trash"></i>
-		</button>
-	</h3>
+	<h3 class="modal-title" ng-switch-default>Edit Banner</h3>
 </div>
 <div class="modal-body">
 	<div class="form-horizontal">
@@ -18,7 +13,35 @@
 		</div>
 	</div>
 
-	<h4>Selected Images</h4>
+	<h4 class="page-header">Selected Images</h4>
+	<div class="available-images row">
+		<div class="item col-sm-4 col-md-3" ng-repeat="(identifier, image) in banner.images" ng-click="removeImage(identifier)">
+			<div class="thumbnail" ng-switch on="image.source">
+				<img ng-switch-when="remote" ng-src="{{image.file}}">
+        <img ng-switch-default ng-src="{{media/image.file}}">
+			</div>
+		</div>
+	</div>
 
-	<h4>Available Images</h4>
+	<h4 class="page-header">Available Images</h4>
+	<div class="available-images row">
+		<div class="item col-sm-4 col-md-3" ng-repeat="(identifier, image) in availableImages" ng-click="addImage(identifier)">
+			<div class="thumbnail" ng-switch on="image.source">
+				<img ng-switch-when="remote" ng-src="{{image.file}}">
+        <img ng-switch-default ng-src="{{media/image.file}}">
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<div class="btn-toolbar">
+		<button type="button" class="btn btn-danger pull-left" ng-click="delete()" ng-if="identifier !== -1">
+			Delete <i class="glyphicon glyphicon-trash"></i>
+		</button>
+		<button type="button" class="btn btn-primary pull-right" ng-click="save()" ng-switch on="identifier">
+			<span ng-switch-when="-1">Add </span>
+			<span ng-switch-default>Update </span>
+			<i class="glyphicon glyphicon-check"></i>
+		</button>
+	</div>
 </div>
