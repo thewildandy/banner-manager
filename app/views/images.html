@@ -6,8 +6,8 @@
 </h1>
 
 <div class="images">
-  <div class="image col-sm-4 col-md-3" ng-repeat="image in images">
-      <div class="thumbnail" ng-switch on="image.source" ng-click="edit($index)">
+  <div class="image col-sm-4 col-md-3" ng-repeat="(identifier, image) in images">
+      <div class="thumbnail" ng-switch on="image.source" ng-click="edit(identifier)">
         <img ng-switch-when="remote" ng-src="{{image.file}}">
         <img ng-switch-default ng-src="{{media/image.file}}">
       </div>
