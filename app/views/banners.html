@@ -1,0 +1,26 @@
+<h1 class="page-header">
+  Banners
+  <button type="button" class="btn btn-primary pull-right" ng-click="create()">
+    New Banner <i class="glyphicon glyphicon-plus-sign"></i>
+  </button>
+</h1>
+
+<div class="banners">
+  <div class="banner col-sm-4 col-md-3" ng-repeat="banner in banners">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{banner.name}}
+      </div>
+      <div class="panel-body">
+        <img class="thumbnail" src="http://placehold.it/600x600">
+        <p class="text-center">x images</p>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-toolbar">
+          <button type="button" class="btn btn-sm btn-default pull-left" ng-click="edit($index)">Edit</button>
+          <button type="button" class="btn btn-sm btn-default pull-right">Embed</button>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

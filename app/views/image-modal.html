@@ -1,0 +1,20 @@
+<div class="modal-header" ng-switch on="banner.id">
+	<h3 class="modal-title" ng-switch-when="-1">Add Banner</h3>
+	<h3 class="modal-title" ng-switch-default>
+		Edit Banner
+		<button type="button" class="btn btn-danger pull-right" ng-click="delete()">
+			Delete <i class="glyphicon glyphicon-trash"></i>
+		</button>
+	</h3>
+</div>
+<div class="modal-body">
+	<div class="form-horizontal">
+		<div class="form-group">
+			<label for="name" class="control-label col-sm-2">Name</label>
+			<div class="col-sm-9">
+				<input type="text" name="name" class="form-control" ng-model="banner.name">
+				<small class="help-block">Naming your banner makes it easier to identify later.</small>
+			</div>
+		</div>
+	</div>
+</div>
