@@ -3,7 +3,9 @@
 angular.module('bannerManagerApp')
   .controller('BannerCtrl', function ($scope, $modal, $timeout, BannerService) {
     BannerService.getBanners().then(function (banners) {
-      $scope.banners = banners;
+      if(banners !== 'null')
+        $scope.banners = banners;
+
       $timeout(function() {
         $('.banner-preview').cycle({
           centerHorz: true,
@@ -16,7 +18,7 @@ angular.module('bannerManagerApp')
       var banner = {
         name: '',
         file: '',
-        images: {}
+        images: []
       };
 
       var modal = $modal.open({
@@ -74,14 +76,14 @@ angular.module('bannerManagerApp')
     });
 
     $scope.addImage = function(key) {
-      if($scope.banner.images == undefined)
-        $scope.banner.images = {};
+      if($scope.banner.images === undefined)
+        $scope.banner.images = [];
 
-      $scope.banner.images[key] = $scope.availableImages[key];
+      $scope.banner.images.push($scope.availableImages[key]);
     }
 
     $scope.removeImage = function(key) {
-      delete $scope.banner.images[key];
+      $scope.banner.images.splice(key, 1);
     }
 
     $scope.save = function() {
