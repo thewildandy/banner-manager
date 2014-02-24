@@ -20,7 +20,6 @@
     <!-- endbuild -->
   </head>
   <body ng-app="bannerManagerApp">
-
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavCtrl">
       <div class="container">
         <div class="navbar-header">
@@ -37,6 +36,7 @@
             <li ng-class="{active: route.current.name == 'banners'}"><a href="#/banners">Banners</a></li>
             <li ng-class="{active: route.current.name == 'images'}"><a href="#/images">Images</a></li>
           </ul>
+          <span class="navbar-text navbar-right" ng-if="identity">{{identity}}</span>
         </div>
       </div>
     </div>
@@ -71,6 +71,7 @@
         <script src="scripts/controllers/nav.js"></script>
         <script src="scripts/controllers/banner.js"></script>
         <script src="scripts/controllers/image.js"></script>
+        <script src="scripts/controllers/login.js"></script>
         <script src="scripts/services/banner.js"></script>
         <script src="scripts/services/image.js"></script>
         <!-- endbuild -->
