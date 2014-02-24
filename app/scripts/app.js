@@ -29,14 +29,17 @@ angular.module('bannerManagerApp', [
         redirectTo: '/banners'
       });
   })
-  .run(function ($rootScope, $location, $cookies) {
+  .run(function ($rootScope, $location, AuthService) {
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
       // Return early if the destination is the login route
-      if(next.name == 'login')
+      if(next.name == 'login') {
         return;
+      }
 
-      // Redirect unauthenticated users to the login page
-      if(!$cookies.user)
-        $location.path('/login');
+      // Wait for authentication, then ...
+      AuthService.check().then(function (authenticated) {
+        if(!authenticated)
+          $location.path('/login'); // Redirect to login
+      });
     });
   });
