@@ -18,17 +18,17 @@
 		<div class="item col-sm-4 col-md-3" ng-repeat="image in banner.images track by $index" ng-click="removeImage($index)">
 			<div class="thumbnail" ng-switch on="image.source">
 				<img ng-switch-when="remote" ng-src="{{image.file}}">
-        <img ng-switch-default ng-src="{{media/image.file}}">
+        <img ng-switch-default ng-src="media/{{image.file}}">
 			</div>
 		</div>
 	</div>
 
 	<h4 class="page-header">Available Images</h4>
 	<div class="available-images row">
-		<div class="item col-sm-4 col-md-3" ng-repeat="(identifier, image) in availableImages" ng-click="addImage(identifier)">
+		<div class="item col-sm-4 col-md-3" ng-repeat="image in availableImages" ng-click="addImage($index)">
 			<div class="thumbnail" ng-switch on="image.source">
 				<img ng-switch-when="remote" ng-src="{{image.file}}">
-        <img ng-switch-default ng-src="{{media/image.file}}">
+        <img ng-switch-default ng-src="media/{{image.file}}">
 			</div>
 		</div>
 	</div>

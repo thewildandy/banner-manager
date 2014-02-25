@@ -45,7 +45,7 @@ angular.module('bannerManagerApp')
       };
     }
 
-    Images.get();
+    $scope.availableImages = Images.get();
 
     $scope.addImage = function(key) {
       $scope.banner.images.push($scope.availableImages[key]);
