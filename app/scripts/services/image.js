@@ -1,29 +1,26 @@
 'use strict';
 
 angular.module('bannerManagerApp')
-  .factory('ImageService', function ($rootScope, $firebase, $http) {
+  .factory('Images', function ($firebase) {
   	var firebaseUrl = 'https://twa.firebaseio.com/banner-manager';
-  	var images = new Firebase(firebaseUrl + '/images');
+  	var images = $firebase(new Firebase(firebaseUrl + '/images'));
+
     return {
-    	getImages: function() {
-    		return $http.get(firebaseUrl + '/images.json').then(function(response) {
-          return response.data;
-        });
-    	},
-      getImage: function(identifier) {
-        return $http.get(firebaseUrl + '/images/' + identifier + '.json').then(function(response) {
-          return response.data;
-        });
+      add: function(data) {
+        images.$add(data);
       },
-      updateImage: function(identifier, data) {
-        return $http.put(firebaseUrl + '/images/' + identifier + '.json', data).then(function(response) {
-          $rootScope.$broadcast('imageUpdated', identifier, response.data);
-        });
+      get: function(key) {
+        if(key !== undefined) {
+          return images.$child(key);
+        } else {
+          return images;
+        }
       },
-      deleteImage: function(identifier) {
-        return $http.delete(firebaseUrl + '/images/' + identifier + '.json').then(function(response) {
-          $rootScope.$broadcast('imageDeleted', identifier);
-        });
+      update: function(image) {
+        image.$save();
+      },
+      delete: function(key) {
+        images.$remove(key);
       }
     };
   });

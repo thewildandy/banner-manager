@@ -1,84 +1,55 @@
 'use strict';
 
 angular.module('bannerManagerApp')
-  .controller('BannerCtrl', function ($scope, $modal, $timeout, BannerService) {
-    BannerService.getBanners().then(function (banners) {
-      if(banners !== 'null')
-        $scope.banners = banners;
+  .controller('BannerCtrl', function ($scope, $modal, $timeout, Banners) {
+    $scope.banners = Banners.get();
 
-      $timeout(function() {
-        $('.banner-preview').cycle({
-          centerHorz: true,
-          centerVert: true
-        });
-      })
+    $scope.banners.$on('loaded', function() {
+      $('.banner-preview').cycle({
+        centerHorz: true,
+        centerVert: true
+      });
     });
 
     $scope.create = function() {
-      var banner = {
-        name: '',
-        file: '',
-        images: []
-      };
-
       var modal = $modal.open({
         templateUrl: 'views/banner-modal.html',
         controller: 'BannerModalCtrl',
         resolve: {
-          banner: function() {
-            return banner;
-          },
-          identifier: function() {
-            return -1;
+          key: function() {
+            return null;
           }
         }
       });
     }
 
-    $scope.edit = function(identifier) {
-      BannerService.getBanner(identifier).then(function (banner) {
-        var modal = $modal.open({
-            templateUrl: 'views/banner-modal.html',
-            controller: 'BannerModalCtrl',
-            resolve: {
-              banner: function() {
-                  return banner;
-              },
-              identifier: function() {
-                return identifier;
-              }
+    $scope.edit = function(key) {
+      var modal = $modal.open({
+          templateUrl: 'views/banner-modal.html',
+          controller: 'BannerModalCtrl',
+          resolve: {
+            key: function() {
+              return key;
             }
-        });
+          }
       });
     }
-
-    $scope.$on('bannerCreated', function (event, identifier) {
-      BannerService.getBanner(identifier).then(function (banner) {
-        $scope.banners[identifier] = banner;
-      });
-    });
-
-    $scope.$on('bannerUpdated', function (event, identifier, banner) {
-      $scope.banners[identifier] = banner;
-    });
-
-    $scope.$on('bannerDeleted', function (event, identifier) {
-      delete $scope.banners[identifier];
-    });
   })
 
-  .controller('BannerModalCtrl', function ($scope, $modalInstance, ImageService, BannerService, banner, identifier) {
-    $scope.banner = banner;
-    $scope.identifier = identifier;
+  .controller('BannerModalCtrl', function ($scope, $modalInstance, ImageService, Banners, key) {
+    if(key) {
+      $scope.banner = Banners.get(key);
+    } else {
+      $scope.banner = {
+        images: []
+      };
+    }
 
     ImageService.getImages().then(function (images) {
       $scope.availableImages = images;
     });
 
     $scope.addImage = function(key) {
-      if($scope.banner.images === undefined)
-        $scope.banner.images = [];
-
       $scope.banner.images.push($scope.availableImages[key]);
     }
 
@@ -87,20 +58,16 @@ angular.module('bannerManagerApp')
     }
 
     $scope.save = function() {
-      if(identifier == -1) {
-        BannerService.createBanner($scope.banner).then(function () {
-          $modalInstance.close();
-        });  
+      if(key) {
+        Banners.update($scope.banner);
       } else {
-        BannerService.updateBanner(identifier, $scope.banner).then(function () {
-          $modalInstance.close();
-        });
+        Banners.add($scope.banner);
       }
+      $modalInstance.close();
     }
 
     $scope.delete = function() {
-      BannerService.deleteBanner(identifier).then(function () {
-        $modalInstance.close();
-      });
+      Banners.delete(key);
+      $modalInstance.close();
     }
   });
