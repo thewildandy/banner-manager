@@ -1,5 +1,13 @@
 <div class="col-sm-6 col-sm-offset-3">
+	<!-- Header -->
 	<h1 class="page-header">Login Required</h1>
+
+	<!-- Alerts -->
+	<div class="alerts" ng-controller="AlertCtrl">
+	  <alert ng-repeat="alert in alerts" type="alert.type" close="close($index)">{{alert.msg}}</alert>
+	</div>
+	
+	<!-- Login panel -->
 	<div class="panel panel-default">
 		<div class="panel-body">
 			<form role="form">

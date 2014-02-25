@@ -5,6 +5,10 @@
   </button>
 </h1>
 
+<div class="alerts" ng-controller="AlertCtrl">
+  <alert ng-repeat="alert in alerts" type="alert.type" close="close($index)">{{alert.msg}}</alert>
+</div>
+
 <div class="banners">
   <div class="banner col-sm-4 col-md-3" ng-repeat="(identifier, banner) in banners">
     <div class="panel panel-default">
