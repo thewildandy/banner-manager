@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('bannerManagerApp', [
+  'angular-md5',
   'firebase',
   'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap',
+  'ui.bootstrap'
 ])
   .config(function ($routeProvider) {
     $routeProvider

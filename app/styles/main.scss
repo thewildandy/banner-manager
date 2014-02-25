@@ -16,3 +16,22 @@ body {
 		max-width: 100%;
 	}
 }
+
+.page-header {
+	position: relative;
+
+	#uploadify {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+
+		.uploadify-button-text {
+			display: block;
+			margin-top: -6px;
+		}
+	}
+
+	#uploadify-queue {
+		display: none;
+	}
+}

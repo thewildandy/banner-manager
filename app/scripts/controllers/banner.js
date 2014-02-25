@@ -36,7 +36,7 @@ angular.module('bannerManagerApp')
     }
   })
 
-  .controller('BannerModalCtrl', function ($scope, $modalInstance, ImageService, Banners, key) {
+  .controller('BannerModalCtrl', function ($scope, $modalInstance, Images, Banners, key) {
     if(key) {
       $scope.banner = Banners.get(key);
     } else {
@@ -45,9 +45,7 @@ angular.module('bannerManagerApp')
       };
     }
 
-    ImageService.getImages().then(function (images) {
-      $scope.availableImages = images;
-    });
+    Images.get();
 
     $scope.addImage = function(key) {
       $scope.banner.images.push($scope.availableImages[key]);

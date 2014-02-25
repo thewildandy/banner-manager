@@ -1,7 +1,7 @@
 <div class="modal-body">
 	<div class="thumbnail" ng-switch on="image.source">
     <img ng-switch-when="remote" ng-src="{{image.file}}">
-    <img ng-switch-default ng-src="{{media/image.file}}">
+    <img ng-switch-default ng-src="media/{{image.file}}">
   </div>
   <div class="form-group">
   	<input type="text" class="form-control" ng-model="image.name" placeholder="Image name">

@@ -282,6 +282,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             '*.html',
+            '*.php',
             'views/{,*/}*.html',
             'bower_components/**/*',
             'images/{,*/}*.{webp}',
@@ -395,7 +396,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
-    'htmlmin'
+    //'htmlmin'
   ]);
 
   grunt.registerTask('default', [
